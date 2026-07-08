@@ -1,0 +1,78 @@
+#DV
+from google.colab import files
+uploaded = files.upload()
+# Import Required Libraries
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Load Dataset
+# The file 'HDI.csv' is expected to be uploaded directly to the Colab environment's root directory.
+Development = pd.read_csv('HDI.csv')
+
+# Select first 20 rows for visualization
+data1 = Development.head(20)
+
+# --------------------------------------------
+# 1. Unique Country Values
+# --------------------------------------------
+
+print("Unique Country Values:")
+print(Development["Country"].unique())
+
+# --------------------------------------------
+# 2. Mean Years of Schooling vs HDI
+# --------------------------------------------
+
+plt.figure(figsize=(8,5))
+
+sns.stripplot(
+    x="Mean years of schooling",
+    y="HDI",
+    data=data1,
+    jitter=True
+)
+
+plt.xticks(rotation=90)
+plt.title("Mean Years of Schooling vs HDI")
+plt.xlabel("Mean Years of Schooling")
+plt.ylabel("HDI Score")
+plt.show()
+
+# --------------------------------------------
+# 3. Life Expectancy vs HDI
+# --------------------------------------------
+
+plt.figure(figsize=(8,5))
+
+sns.stripplot(
+    x="Life expectancy",
+    y="HDI",
+    data=data1,
+    jitter=True
+)
+
+plt.xticks(rotation=90)
+plt.title("Life Expectancy vs HDI")
+plt.xlabel("Life Expectancy")
+plt.ylabel("HDI Score")
+plt.show()
+
+# --------------------------------------------
+# 4. Correlation Heatmap
+# --------------------------------------------
+
+# Select only numeric columns
+heat = Development.select_dtypes(include=['number'])
+
+plt.figure(figsize=(10,7))
+
+sns.heatmap(
+    heat.corr(),
+    annot=True,
+    cmap="coolwarm",
+    linewidths=0.5
+)
+
+plt.title("Correlation Heatmap")
+plt.show()
