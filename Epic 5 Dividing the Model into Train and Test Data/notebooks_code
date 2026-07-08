@@ -1,0 +1,51 @@
+{
+  "metadata": {
+    "kernelspec": {
+      "name": "python",
+      "display_name": "Python (Pyodide)",
+      "language": "python"
+    },
+    "language_info": {
+      "codemirror_mode": {
+        "name": "python",
+        "version": 3
+      },
+      "file_extension": ".py",
+      "mimetype": "text/x-python",
+      "name": "python",
+      "nbconvert_exporter": "python",
+      "pygments_lexer": "ipython3",
+      "version": "3.8"
+    }
+  },
+  "nbformat_minor": 5,
+  "nbformat": 4,
+  "cells": [
+    {
+      "id": "c1c8ecb7-2243-467a-bcf0-1191c661ac6b",
+      "cell_type": "code",
+      "source": "# =====================================================================\n# Epic 5: Train and Test Data & Epic 6: Fitting the Model\n# Project Title: A Comprehensive Measure of Well-Being\n# =====================================================================\n\nimport pandas as pd\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.linear_model import LinearRegression\nfrom sklearn.metrics import mean_squared_error, r2_score\n\n# 1. Load data\ndf = pd.read_csv(\"HDI.csv\")\n\n# 2. Separate features (X) and target (y)\n# Drop the target 'HDI' and the text column 'Country' from features\nX = df.drop(columns=['HDI', 'Country'])\ny = df['HDI']\n\n# 3. Train-Test Split (80% Training, 20% Testing as per documentation)\nX_train, X_test, y_train, y_test = train_test_split(\n    X, \n    y, \n    test_size=0.2, \n    random_state=42\n)\n\nprint(\"--- Data Distribution Summary ---\")\nprint(f\"Total dataset samples: {len(df)}\")\nprint(f\"Training set size (80%): {X_train.shape[0]} samples\")\nprint(f\"Testing set size (20%): {X_test.shape[0]} samples\\n\")\n\n# 4. Epic 6: Fitting the Model (Linear Regression)\nmodel = LinearRegression()\nmodel.fit(X_train, y_train)\n\n# 5. Model Inference & Evaluation\ny_pred = model.predict(X_test)\n\n# Calculate Evaluation Metrics\nmse = mean_squared_error(y_test, y_pred)\nr2 = r2_score(y_test, y_pred)\n\nprint(\"--- Model Performance Metrics ---\")\nprint(f\"Mean Squared Error (MSE): {mse:.6f}\")\nprint(f\"R-squared Score (R2): {r2:.4f}\")",
+      "metadata": {
+        "trusted": true
+      },
+      "outputs": [
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "--- Data Distribution Summary ---\nTotal dataset samples: 124\nTraining set size (80%): 99 samples\nTesting set size (20%): 25 samples\n\n--- Model Performance Metrics ---\nMean Squared Error (MSE): 0.000260\nR-squared Score (R2): 0.9889\n"
+        }
+      ],
+      "execution_count": 2
+    },
+    {
+      "id": "4490c684-143b-4421-b773-7c6f6397cb1d",
+      "cell_type": "code",
+      "source": "",
+      "metadata": {
+        "trusted": true
+      },
+      "outputs": [],
+      "execution_count": null
+    }
+  ]
+}
