@@ -1,0 +1,83 @@
+{
+  "metadata": {
+    "kernelspec": {
+      "name": "python",
+      "display_name": "Python (Pyodide)",
+      "language": "python"
+    },
+    "language_info": {
+      "codemirror_mode": {
+        "name": "python",
+        "version": 3
+      },
+      "file_extension": ".py",
+      "mimetype": "text/x-python",
+      "name": "python",
+      "nbconvert_exporter": "python",
+      "pygments_lexer": "ipython3",
+      "version": "3.8"
+    }
+  },
+  "nbformat_minor": 5,
+  "nbformat": 4,
+  "cells": [
+    {
+      "id": "3c64e925-0475-4e76-8322-a0a7e29cd89e",
+      "cell_type": "code",
+      "source": "import pandas as pd\nimport io\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.linear_model import LinearRegression\nfrom sklearn.metrics import mean_squared_error, r2_score\n\n# ==========================================\n# STEP 1: LOAD & SPLIT DATA (Epic 5)\n# ==========================================\n# Mock dataset to safely bypass Pyodide browser network blocks\ncsv_data = \"\"\"Country,Life expectancy,Mean years of schooling,Expected years of schooling,Gross National Income (GNI) per capita,HDI\nNorway,82.4,13.0,18.1,68059,0.957\nSwitzerland,83.8,13.4,16.3,69394,0.955\nIreland,82.3,12.7,18.7,68371,0.955\nGermany,81.3,14.2,17.0,55306,0.947\nAustralia,83.4,12.7,22.0,48085,0.944\nIceland,83.0,12.8,19.1,54682,0.949\nSweden,82.8,12.5,19.4,54508,0.945\nSingapore,83.6,11.6,16.4,90389,0.938\nNetherlands,82.3,12.4,18.5,57534,0.944\nDenmark,80.9,12.6,18.9,58673,0.940\n\"\"\"\n\ndf = pd.read_csv(io.StringIO(csv_data))\n\n# Separate features (X) and target (y)\nX = df.drop(columns=['HDI', 'Country'])\ny = df['HDI']\n\n# Split the dataset using an 80:20 ratio as per documentation\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\n\nprint(\"--- Epic 5 Setup ---\")\nprint(f\"Data successfully initialized! Training rows: {len(X_train)}, Testing rows: {len(X_test)}\\n\")\n\n\n# ==========================================\n# STEP 2: FIT MODEL & EVALUATE (Epic 6)\n# ==========================================\n# 1. Instantiate the Linear Regression model\nmodel = LinearRegression()\n\n# 2. Fit the model using the training datasets\nmodel.fit(X_train, y_train)\n\nprint(\"--- Epic 6 Execution ---\")\nprint(\"Initialization Status: Complete ✅\")\nprint(\"Model Fitting Status: Complete ✅ (Model has learned the feature relationships)\\n\")\n\n# 3. Test the test field from the split\ny_pred = model.predict(X_test)\n\n# 4. Generate Performance Metrics\nmse = mean_squared_error(y_test, y_pred)\nr2 = r2_score(y_test, y_pred)\n\nprint(\"--- Evaluation Matrix Results ---\")\nprint(f\"Mean Squared Error (MSE):           {mse:.6f}\")\nprint(f\"R-squared Score (R2):               {r2:.4f}\")",
+      "metadata": {
+        "trusted": true
+      },
+      "outputs": [
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "--- Epic 5 Setup ---\nData successfully initialized! Training rows: 8, Testing rows: 2\n\n--- Epic 6 Execution ---\nInitialization Status: Complete ✅\nModel Fitting Status: Complete ✅ (Model has learned the feature relationships)\n\n--- Evaluation Matrix Results ---\nMean Squared Error (MSE):           0.000019\nR-squared Score (R2):               0.3744\n"
+        }
+      ],
+      "execution_count": 3
+    },
+    {
+      "id": "f94dc777-c3a2-4e97-a3ab-bb94ab7119d5",
+      "cell_type": "code",
+      "source": "import numpy as np\nimport pandas as pd\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.linear_model import LinearRegression\nfrom sklearn.metrics import mean_squared_error, r2_score\n\n# ==========================================\n# 1. READ & PARSE THE DATASET\n# ==========================================\n# Simulated data capturing the exact structure of your HDI dataset\ncsv_data = \"\"\"Country,Life expectancy,Mean years of schooling,Expected years of schooling,Gross National Income (GNI) per capita,HDI\nNorway,82.4,13.0,18.1,68059,0.957\nSwitzerland,83.8,13.4,16.3,69394,0.955\nIreland,82.3,12.7,18.7,68371,0.955\nGermany,81.3,14.2,17.0,55306,0.947\nAustralia,83.4,12.7,22.0,48085,0.944\nIceland,83.0,12.8,19.1,54682,0.949\nSweden,82.8,12.5,19.4,54508,0.945\nSingapore,83.6,11.6,16.4,90389,0.938\nNetherlands,82.3,12.4,18.5,57534,0.944\nDenmark,80.9,12.6,18.9,58673,0.940\n\"\"\"\n\ndf = pd.read_csv(io.StringIO(csv_data))\n\n# Separate features (X) and target (y)\nX = df.drop(columns=['HDI', 'Country'])\ny = df[['HDI']]  # Kept as DataFrame to output a 2D array matching your screenshot\n\n# 2. Train-Test Split (80% Train, 20% Test)\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\n\n# 3. Fit the Linear Regression Model\nmodel = LinearRegression()\nmodel.fit(X_train, y_train)\n\n\n# ==========================================\n# 4. TASK STIPULATIONS & VALIDATION CHECKS\n# ==========================================\n\n# Checkpoint A: Generate and Inspect y_pred Values\ny_pred = model.predict(X_test)\nprint(\"--- Inspect y_pred Values (Predicted HDI) ---\")\nprint(y_pred)\nprint(\"\\n\" + \"=\"*40 + \"\\n\")\n\n# Checkpoint B: Inspect y_test Values (Ground Truth)\nprint(\"--- Inspect y_test Values (Actual Ground Truth Array) ---\")\nprint(y_test.values)\nprint(\"\\n\" + \"=\"*40 + \"\\n\")\n\n# Checkpoint C: Calculate R-Squared (R²) and MSE Values\nmse = mean_squared_error(y_test, y_pred)\nr2 = r2_score(y_test, y_pred)\nprint(\"--- Statistical Variance Evaluation Metrics ---\")\nprint(f\"R-Squared Value (R²):       {r2:.4f}\")\nprint(f\"Mean Squared Error (MSE):   {mse:.6f}\")\nprint(\"\\n\" + \"=\"*40 + \"\\n\")\n\n# Checkpoint D: Test with Fewer Values (Individual Feature Validation)\nprint(\"--- Individual Data Point Validation (Reduced Input Set) ---\")\n# Strip down the testing set to an isolated country point row\nfewer_values_input = X_test.iloc[[0]]\nsingle_pred = model.predict(fewer_values_input)\n\nprint(\"Reduced Inputs Passed:\")\nprint(fewer_values_input.to_string(index=False))\nprint(f\"\\nModel Target Output for individual record: {single_pred[0][0]:.4f}\")\nprint(f\"Actual Expected Benchmark value:           {y_test.values[0][0]:.4f}\")",
+      "metadata": {
+        "trusted": true
+      },
+      "outputs": [
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "--- Inspect y_pred Values (Predicted HDI) ---\n[[0.93930991]\n [0.95101846]]\n\n========================================\n\n--- Inspect y_test Values (Actual Ground Truth Array) ---\n[[0.944]\n [0.955]]\n\n========================================\n\n--- Statistical Variance Evaluation Metrics ---\nR-Squared Value (R²):       0.3744\nMean Squared Error (MSE):   0.000019\n\n========================================\n\n--- Individual Data Point Validation (Reduced Input Set) ---\nReduced Inputs Passed:\n Life expectancy  Mean years of schooling  Expected years of schooling  Gross National Income (GNI) per capita\n            82.3                     12.4                         18.5                                   57534\n\nModel Target Output for individual record: 0.9393\nActual Expected Benchmark value:           0.9440\n"
+        }
+      ],
+      "execution_count": 4
+    },
+    {
+      "id": "5a2ad8ff-82a6-446f-a878-1aaca23fa856",
+      "cell_type": "code",
+      "source": "import numpy as np\nimport pandas as pd\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.linear_model import LinearRegression\nfrom sklearn.metrics import mean_squared_error, r2_score\n\n# ==========================================\n# 1. READ & PARSE THE DATASET\n# ==========================================\n# Simulated data capturing the exact structure of your HDI dataset\ncsv_data = \"\"\"Country,Life expectancy,Mean years of schooling,Expected years of schooling,Gross National Income (GNI) per capita,HDI\nNorway,82.4,13.0,18.1,68059,0.957\nSwitzerland,83.8,13.4,16.3,69394,0.955\nIreland,82.3,12.7,18.7,68371,0.955\nGermany,81.3,14.2,17.0,55306,0.947\nAustralia,83.4,12.7,22.0,48085,0.944\nIceland,83.0,12.8,19.1,54682,0.949\nSweden,82.8,12.5,19.4,54508,0.945\nSingapore,83.6,11.6,16.4,90389,0.938\nNetherlands,82.3,12.4,18.5,57534,0.944\nDenmark,80.9,12.6,18.9,58673,0.940\n\"\"\"\n\ndf = pd.read_csv(io.StringIO(csv_data))\n\n# Separate features (X) and target (y)\nX = df.drop(columns=['HDI', 'Country'])\ny = df[['HDI']]  # Kept as DataFrame to output a 2D array matching your screenshot\n\n# 2. Train-Test Split (80% Train, 20% Test)\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\n\n# 3. Fit the Linear Regression Model\nmodel = LinearRegression()\nmodel.fit(X_train, y_train)\n\n\n# ==========================================\n# 4. TASK STIPULATIONS & VALIDATION CHECKS\n# ==========================================\n\n# Checkpoint A: Generate and Inspect y_pred Values\ny_pred = model.predict(X_test)\nprint(\"--- Inspect y_pred Values (Predicted HDI) ---\")\nprint(y_pred)\nprint(\"\\n\" + \"=\"*40 + \"\\n\")\n\n# Checkpoint B: Inspect y_test Values (Ground Truth)\nprint(\"--- Inspect y_test Values (Actual Ground Truth Array) ---\")\nprint(y_test.values)\nprint(\"\\n\" + \"=\"*40 + \"\\n\")\n\n# Checkpoint C: Calculate R-Squared (R²) and MSE Values\nmse = mean_squared_error(y_test, y_pred)\nr2 = r2_score(y_test, y_pred)\nprint(\"--- Statistical Variance Evaluation Metrics ---\")\nprint(f\"R-Squared Value (R²):       {r2:.4f}\")\nprint(f\"Mean Squared Error (MSE):   {mse:.6f}\")\nprint(\"\\n\" + \"=\"*40 + \"\\n\")\n\n# Checkpoint D: Test with Fewer Values (Individual Feature Validation)\nprint(\"--- Individual Data Point Validation (Reduced Input Set) ---\")\n# Strip down the testing set to an isolated country point row\nfewer_values_input = X_test.iloc[[0]]\nsingle_pred = model.predict(fewer_values_input)\n\nprint(\"Reduced Inputs Passed:\")\nprint(fewer_values_input.to_string(index=False))\nprint(f\"\\nModel Target Output for individual record: {single_pred[0][0]:.4f}\")\nprint(f\"Actual Expected Benchmark value:           {y_test.values[0][0]:.4f}\")",
+      "metadata": {
+        "trusted": true
+      },
+      "outputs": [
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "--- Inspect y_pred Values (Predicted HDI) ---\n[[0.93930991]\n [0.95101846]]\n\n========================================\n\n--- Inspect y_test Values (Actual Ground Truth Array) ---\n[[0.944]\n [0.955]]\n\n========================================\n\n--- Statistical Variance Evaluation Metrics ---\nR-Squared Value (R²):       0.3744\nMean Squared Error (MSE):   0.000019\n\n========================================\n\n--- Individual Data Point Validation (Reduced Input Set) ---\nReduced Inputs Passed:\n Life expectancy  Mean years of schooling  Expected years of schooling  Gross National Income (GNI) per capita\n            82.3                     12.4                         18.5                                   57534\n\nModel Target Output for individual record: 0.9393\nActual Expected Benchmark value:           0.9440\n"
+        }
+      ],
+      "execution_count": 4
+    },
+    {
+      "id": "53c22ef5-1cb4-449d-93bf-ab2d8d452724",
+      "cell_type": "code",
+      "source": "",
+      "metadata": {
+        "trusted": true
+      },
+      "outputs": [],
+      "execution_count": null
+    }
+  ]
+}
