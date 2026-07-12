@@ -1,0 +1,67 @@
+{
+  "metadata": {
+    "kernelspec": {
+      "name": "python",
+      "display_name": "Python (Pyodide)",
+      "language": "python"
+    },
+    "language_info": {
+      "codemirror_mode": {
+        "name": "python",
+        "version": 3
+      },
+      "file_extension": ".py",
+      "mimetype": "text/x-python",
+      "name": "python",
+      "nbconvert_exporter": "python",
+      "pygments_lexer": "ipython3",
+      "version": "3.8"
+    }
+  },
+  "nbformat_minor": 5,
+  "nbformat": 4,
+  "cells": [
+    {
+      "id": "8d2c0f94-b6af-432f-93d9-1ae69066876b",
+      "cell_type": "code",
+      "source": "import pandas as pd\nfrom sklearn.model_selection import train_test_split\n\n# 1. Read locally since it's uploaded to your workspace\ndf = pd.read_csv(\"HDI.csv\")\n\n# 2. Separate features (X) and target (y)\nX = df.drop(columns=['HDI', 'Country'])\ny = df['HDI']\n\n# 3. Train-Test Split\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\n\nprint(\"Data successfully loaded and split from local upload!\")",
+      "metadata": {
+        "trusted": true
+      },
+      "outputs": [
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "Data successfully loaded and split from local upload!\n"
+        }
+      ],
+      "execution_count": 4
+    },
+    {
+      "id": "f391939a-7a13-41e5-b4ff-9f2740bf288d",
+      "cell_type": "code",
+      "source": "import pandas as pd\nimport io\nfrom sklearn.model_selection import train_test_split\n\n# 1. Provide a mock sample of the actual HDI dataset directly as a string\n# This bypasses the browser's blocked network connection completely!\ncsv_data = \"\"\"Country,Life expectancy,Mean years of schooling,Expected years of schooling,Gross National Income (GNI) per capita,HDI\nNorway,82.4,13.0,18.1,68059,0.957\nSwitzerland,83.8,13.4,16.3,69394,0.955\nIreland,82.3,12.7,18.7,68371,0.955\nGermany,81.3,14.2,17.0,55306,0.947\nAustralia,83.4,12.7,22.0,48085,0.944\nIceland,83.0,12.8,19.1,54682,0.949\nSweden,82.8,12.5,19.4,54508,0.945\nSingapore,83.6,11.6,16.4,90389,0.938\nNetherlands,82.3,12.4,18.5,57534,0.944\nDenmark,80.9,12.6,18.9,58673,0.940\n\"\"\"\n\n# 2. Read the text data into a DataFrame\ndf = pd.read_csv(io.StringIO(csv_data))\n\n# 3. Separate features (X) and target (y)\nX = df.drop(columns=['HDI', 'Country'])\ny = df['HDI']\n\n# 4. Train-Test Split (80% Train, 20% Test as per your documentation)\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\n\nprint(\"--- Success! Dataset Loaded and Split Freely ---\")\nprint(f\"Columns in X: {list(X.columns)}\")\nprint(f\"Target column y: {y.name}\")\nprint(f\"Training samples: {len(X_train)} | Testing samples: {len(X_test)}\")",
+      "metadata": {
+        "trusted": true
+      },
+      "outputs": [
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "--- Success! Dataset Loaded and Split Freely ---\nColumns in X: ['Life expectancy', 'Mean years of schooling', 'Expected years of schooling', 'Gross National Income (GNI) per capita']\nTarget column y: HDI\nTraining samples: 8 | Testing samples: 2\n"
+        }
+      ],
+      "execution_count": 5
+    },
+    {
+      "id": "96cb140f-b664-4d28-8ba7-3ff75c1d4099",
+      "cell_type": "code",
+      "source": "",
+      "metadata": {
+        "trusted": true
+      },
+      "outputs": [],
+      "execution_count": null
+    }
+  ]
+}
