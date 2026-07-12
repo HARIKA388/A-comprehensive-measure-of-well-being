@@ -1,0 +1,50 @@
+PS C:\Users\HP\Desktop\n> pip install numpy
+Requirement already satisfied: numpy in c:\users\hp\appdata\local\programs\python\python310\lib\site-packages (2.2.6)
+
+[notice] A new release of pip available: 22.3.1 -> 26.1.1
+[notice] To update, run: python.exe -m pip install --upgrade pip
+
+PS C:\Users\HP\Desktop\n> pip install pandas
+Requirement already satisfied: pandas in c:\users\hp\appdata\local\programs\python\python310\lib\site-packages (2.3.3)
+Requirement already satisfied: numpy>=1.22.4
+Requirement already satisfied: python-dateutil>=2.8.2
+Requirement already satisfied: pytz>=2020.1
+Requirement already satisfied: tzdata>=2022.7
+Requirement already satisfied: six>=1.5
+
+[notice] A new release of pip available: 22.3.1 -> 26.1.1
+[notice] To update, run: python.exe -m pip install --upgrade pip
+
+PS C:\Users\HP\Desktop\n> pip install matplotlib
+Collecting matplotlib
+Downloading matplotlib-3.10.9-cp310-cp310-win_amd64.whl
+Collecting contourpy>=1.0.1
+Collecting cycler>=0.10
+Collecting fonttools>=4.22.0
+Collecting kiwisolver>=1.3.1
+Collecting packaging>=20.0
+Collecting pillow>=8
+Collecting pyparsing>=2.3.1
+Installing collected packages: pyparsing, pillow, packaging, kiwisolver, fonttools, cycler, contourpy, matplotlib
+Successfully installed contourpy-1.3.2 cycler-0.12.1 fonttools-4.xx.x kiwisolver-1.4.x matplotlib-3.10.9 packaging-25.0 pillow-11.x pyparsing-3.x
+
+PS C:\Users\HP\Desktop\n> pip install scikit-learn
+Collecting scikit-learn
+Downloading scikit_learn-1.x.x-cp310-cp310-win_amd64.whl
+Requirement already satisfied: numpy>=1.22.0
+Requirement already satisfied: scipy>=1.8.0
+Requirement already satisfied: joblib>=1.2.0
+Requirement already satisfied: threadpoolctl>=3.1.0
+Successfully installed scikit-learn-1.x.x
+
+PS C:\Users\HP\Desktop\n> pip install Flask
+Collecting Flask
+Downloading flask-3.x.x-py3-none-any.whl
+Collecting Werkzeug>=3.0
+Collecting Jinja2>=3.1
+Collecting itsdangerous>=2.2
+Collecting click>=8.1
+Collecting blinker>=1.9
+Successfully installed Flask-3.x.x Werkzeug-3.x.x Jinja2-3.x.x itsdangerous-2.x.x click-8.x.x blinker-1.x.x
+
+PS C:\Users\HP\Desktop\n>
