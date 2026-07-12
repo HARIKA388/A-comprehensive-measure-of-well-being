@@ -1,0 +1,51 @@
+{
+  "metadata": {
+    "kernelspec": {
+      "name": "python",
+      "display_name": "Python (Pyodide)",
+      "language": "python"
+    },
+    "language_info": {
+      "codemirror_mode": {
+        "name": "python",
+        "version": 3
+      },
+      "file_extension": ".py",
+      "mimetype": "text/x-python",
+      "name": "python",
+      "nbconvert_exporter": "python",
+      "pygments_lexer": "ipython3",
+      "version": "3.8"
+    }
+  },
+  "nbformat_minor": 5,
+  "nbformat": 4,
+  "cells": [
+    {
+      "id": "75f64b22-e50d-499f-b990-e70058db3ac5",
+      "cell_type": "code",
+      "source": "import io\nimport pandas as pd\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.linear_model import LinearRegression\nimport pickle\n\n# =====================================================================\n# 1. SETUP: LOAD AND RECONSTRUCT 'Development' DATAFRAME\n# =====================================================================\n# Creating a dummy dataset matrix with enough columns to satisfy indexing up to index 67 safely.\n# Your target (HDI) is at index 4, features are at 2, 5, 6, 7, and a dummy column at 67.\ndata_dict = {\n    f\"Col_{i}\": [0.0] * 5 for i in range(70)\n}\n\n# Overwriting the exact requested indexed columns with relevant project naming structures\ndata_dict[\"Col_2\"] = [\"Norway\", \"Switzerland\", \"Ireland\", \"Germany\", \"Australia\"]  # Country\ndata_dict[\"Col_4\"] = [0.957, 0.955, 0.955, 0.947, 0.944]                          # HDI Score (Target)\ndata_dict[\"Col_5\"] = [82.4, 83.8, 82.3, 81.3, 83.4]                                # Life Expectancy\ndata_dict[\"Col_6\"] = [13.0, 13.4, 12.7, 14.2, 12.7]                                # Mean Years Schooling\ndata_dict[\"Col_7\"] = [18.1, 16.3, 18.7, 17.0, 22.0]                                # Expected Schooling\ndata_dict[\"Col_67\"] = [68059, 69394, 68371, 55306, 48085]                          # GNI per Capita\n\nDevelopment = pd.DataFrame(data_dict)\n\nprint(\"--- Step 1: Base 'Development' Data Matrix Formed ---\")\nprint(f\"Total Base Columns available: {Development.shape[1]}\")\n\n\n# =====================================================================\n# 2. EXECUTE YOUR EXACT CODE FROM THE ASSIGNMENT COMPONENT\n# =====================================================================\n# #Independent Variables\nX = Development.iloc[:, [2, 5, 6, 7, 67]]\nX = pd.DataFrame(X)\n\n# #Dependant Variable\ny = Development.iloc[:, 4].values\ny = pd.DataFrame(y)\n\nprint(\"\\n--- Step 2: Extraction Complete ---\")\nprint(\"Features Matrix (X) Shape:\", X.shape)\nprint(\"Target Vector (y) Shape:   \", y.shape)\n\n\n# =====================================================================\n# 3. PIPELINE CONTINUATION: TRAIN, FIT, AND EXPORT (Epic 5, 6 & 7)\n# =====================================================================\n# Dropping column index 0 (which corresponds to 'Country' text strings from your features layout) \n# so Scikit-Learn can compute weights without a string-to-float crash.\nX_numerical = X.drop(columns=[X.columns[0]])\n\n# Split structural data partitions (80% training / 20% validation layout)\nx_train, x_test, y_train, y_test = train_test_split(\n    X_numerical, y, test_size=0.2, random_state=42\n)\n\n# Instantiate, Train, and Fit the Estimator Model\nreg = LinearRegression()\nreg.fit(x_train, y_train)\n\n# Serialize and Dump Object Model to Disk\npickle.dump(reg, open('HDI.pkl', 'wb'))\n\nprint(\"\\n--- Pipeline Sign-Off Status ---\")\nprint(\"Data Partitioning: Complete ✅\")\nprint(\"Model Fitting (reg.fit): Complete ✅\")\nprint(\"Serialized Deployment Artifact 'HDI.pkl' Saved: Complete ✅\")",
+      "metadata": {
+        "trusted": true
+      },
+      "outputs": [
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "--- Step 1: Base 'Development' Data Matrix Formed ---\nTotal Base Columns available: 70\n\n--- Step 2: Extraction Complete ---\nFeatures Matrix (X) Shape: (5, 5)\nTarget Vector (y) Shape:    (5, 1)\n\n--- Pipeline Sign-Off Status ---\nData Partitioning: Complete ✅\nModel Fitting (reg.fit): Complete ✅\nSerialized Deployment Artifact 'HDI.pkl' Saved: Complete ✅\n"
+        }
+      ],
+      "execution_count": 1
+    },
+    {
+      "id": "d19f3ade-f2d7-471d-96ed-794c5017ea55",
+      "cell_type": "code",
+      "source": "",
+      "metadata": {
+        "trusted": true
+      },
+      "outputs": [],
+      "execution_count": null
+    }
+  ]
+}
